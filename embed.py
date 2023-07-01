@@ -3,9 +3,9 @@
 import os
 from langchain.document_loaders import PyPDFLoader
 from langchain.text_splitter import CharacterTextSplitter
+from dotenv import load_dotenv
 from langchain.embeddings import OpenAIEmbeddings
-from langchain.vectorstores import FAISS
-
+from langchain.vectorstores import Chroma
 
 def pages(pdf_file):
     text_splitter = CharacterTextSplitter(
@@ -18,7 +18,19 @@ def pages(pdf_file):
     pages = loader.load_and_split(text_splitter)
     return pages
 
-def vectorstore(pages):
-    embeddings = OpenAIEmbeddings(model=os.getenv("OPENAI_EMBEDDING_MODEL_NAME"), deployment=os.getenv("OPENAI_EMBEDDING_DEPLOYMENT_NAME"), chunk_size=1)
-    vectorstore = FAISS.from_documents(documents=pages, embedding=embeddings)
+def db_dir():
+    load_dotenv()
+    return os.getenv("CHROMA_DIR")
+
+def db_dir_exists():
+    return os.path.isdir(db_dir())
+
+def embedding():
+    return OpenAIEmbeddings(model=os.getenv("OPENAI_EMBEDDING_MODEL_NAME"), deployment=os.getenv("OPENAI_EMBEDDING_DEPLOYMENT_NAME"), chunk_size=1)
+
+def pages_to_vectorstore(pages):
+    vectorstore = Chroma.from_documents(documents=pages, embedding=embedding(), persist_directory=db_dir())
     return vectorstore
+
+def vectorstore():
+    return Chroma(persist_directory=db_dir(), embedding_function=embedding())

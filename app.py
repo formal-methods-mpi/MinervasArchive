@@ -1,5 +1,6 @@
 import os
 import streamlit as st
+import shutil
 from tempfile import NamedTemporaryFile
 import embed
 from langchain.chat_models import AzureChatOpenAI
@@ -56,19 +57,29 @@ def main():
         handle_userinput(user_question)
 
     with st.sidebar:
-        st.subheader("Your document")
-        pdf_upload = st.file_uploader(
-            "Upload your PDF here and click on 'Process'", accept_multiple_files=False, type='pdf')
-        if st.button("Process"):
-            with st.spinner("Processing"):
-                pages = pages_from_upload(pdf_upload)
-
-                # create vector store
-                vectorstore = embed.vectorstore(pages)
-
-                # create conversation chain
-                st.session_state.conversation = get_conversation_chain(
-                    vectorstore)
+        if embed.db_dir_exists():
+            st.subheader("Your Database")
+            if st.button("Delete"):
+                try:
+                    shutil.rmtree(embed.db_dir())
+                    os.rmdir(embed.db_dir())
+                    st.experimental_rerun()
+                finally:
+                    None
+            # create conversation chain
+            vectorstore = embed.vectorstore()
+            st.session_state.conversation = get_conversation_chain(vectorstore)
+        else:
+                st.subheader("Your document")
+                pdf_upload = st.file_uploader(
+                    "Upload your PDF here and click on 'Process'", accept_multiple_files=False, type='pdf')
+                if st.button("Process"):
+                    with st.spinner("Processing"):
+                        pages = pages_from_upload(pdf_upload)
+                        # create vector store
+                        vectorstore = embed.pages_to_vectorstore(pages)
+                        vectorstore.persist()
+                        st.experimental_rerun()
 
 
 if __name__ == '__main__':
