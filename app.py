@@ -27,7 +27,7 @@ def get_conversation_chain(vectorstore):
     return conversation_chain
 
 
-def handle_userinput(user_question):
+def handle_userinput(user_question, vectorstore):
     response = st.session_state.conversation({'question': user_question})
     st.session_state.chat_history = response['chat_history']
 
@@ -36,8 +36,12 @@ def handle_userinput(user_question):
             st.write(user_template.replace(
                 "{{MSG}}", message.content), unsafe_allow_html=True)
         else:
+            answer = message.content
+            doc = vectorstore.similarity_search(answer, k=1)
+            page = doc[0].metadata["page"] + 1
+            answer = answer + "\n\nPage: " + str(page)
             st.write(bot_template.replace(
-                "{{MSG}}", message.content), unsafe_allow_html=True)
+                "{{MSG}}", answer), unsafe_allow_html=True)
 
 
 def main():
@@ -50,11 +54,13 @@ def main():
         st.session_state.conversation = None
     if "chat_history" not in st.session_state:
         st.session_state.chat_history = None
+    if "vectorstore2" not in st.session_state:
+        st.session_state.vectorstore2 = None
 
     st.header("Chat with an PDF :books:")
     user_question = st.text_input("Ask a question about your document:")
     if user_question:
-        handle_userinput(user_question)
+        handle_userinput(user_question, st.session_state.vectorstore2)
 
     with st.sidebar:
         if embed.db_dir_exists():
@@ -68,6 +74,7 @@ def main():
                     None
             # create conversation chain
             vectorstore = embed.vectorstore()
+            st.session_state.vectorstore2 = embed.vectorstore()
             st.session_state.conversation = get_conversation_chain(vectorstore)
         else:
                 st.subheader("Your document")
