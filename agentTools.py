@@ -11,22 +11,22 @@ def create_tools():
         Tool(
             name = "SimpleReportSearch",
             func=simple_report_search,
-            description="useful if you only need a little bit of information from the MPI Research Report 2023, because the User Question is simple"
+            description="useful if you only need a little bit of information from the MPI Research Report 2023, because the User Question is simple. Input the question and the keywords for a keyword-based search in a vector space"
         ),
         Tool(
             name = "ReportSummarizer",
             func = report_summarizer,
-            description="useful if you need a lot information from the MPI Research Report 2023"
+            description="useful if you need a lot information from the MPI Research Report 2023. Input the question and the keywords for a keyword-based search in a vector space"
         ),
         Tool(
             name = "OnePersonSearch",
             func= one_person_search,
-            description="useful when you need information about only one persons in the MPI"
+            description="useful when you need information about only one persons in the MPI. Input the question and the name of the person"
         ),
         Tool(
             name = "MorePersonSearch",
             func=more_person_search,
-            description="useful when you need information about more then one persons in the MPI"
+            description="useful when you need information about more then one persons in the MPI. Input the question and all names of all the persons"
         )
     ]
     return tools
