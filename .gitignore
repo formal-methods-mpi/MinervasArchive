@@ -159,5 +159,8 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-.db/
+app_exp.py
+scrapingFunctions.py
+scrapingXML.py
+prompts_exp.py
 .chroma/

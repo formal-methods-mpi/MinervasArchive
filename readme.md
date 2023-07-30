@@ -1,62 +1,55 @@
-# MultiPDF Chat App
-
-> You can find the tutorial for this project on [YouTube](https://youtu.be/dXxQ0LR-3Hg).
+# Minerva's Archive
 
 ## Introduction
-------------
-The MultiPDF Chat App is a Python application that allows you to chat with multiple PDF documents. You can ask questions about the PDFs using natural language, and the application will provide relevant responses based on the content of the documents. This app utilizes a language model to generate accurate answers to your queries. Please note that the app will only respond to questions related to the loaded PDFs.
+
+Minerva's Archive is a Python-based application that facilitates discussions about research reports from the Max Planck Institute for Human Development and the staff associated with them. This application interprets questions posed in natural language and offers relevant responses, backed by the content of specified documents. It leverages language model-based agents to generate accurate responses to user queries. Please be aware that the application is designed to respond only to questions concerning the Max Planck Institute for Human Development.
 
 ## How It Works
-------------
 
-![MultiPDF Chat App Diagram](./docs/PDF-LangChain.jpg)
+The agent within this application follows a structured process to generate responses to your inquiries:
 
-The application follows these steps to provide responses to your questions:
+1. Question: The application identifies the user's question.
 
-1. PDF Loading: The app reads multiple PDF documents and extracts their text content.
+2. Thought: The agent contemplates the necessary steps to answer the question. If an answer isn't readily available, it will promptly communicate this to the user.
 
-2. Text Chunking: The extracted text is divided into smaller chunks that can be processed effectively.
+3. Action: The agent selects an appropriate tool from a predefined set to formulate the answer.
 
-3. Language Model: The application utilizes a language model to generate vector representations (embeddings) of the text chunks.
+4. Observation: The result of the action is analyzed by the agent, which assesses whether additional information is required to answer the question.
 
-4. Similarity Matching: When you ask a question, the app compares it with the text chunks and identifies the most semantically similar ones.
+5. Repeat: This process is repeated up to three times if the agent deems the observation unsatisfactory.
 
-5. Response Generation: The selected chunks are passed to the language model, which generates a response based on the relevant content of the PDFs.
+6. Final Answer: The agent provides the answer (if feasible) and references the consulted documents.
 
 ## Dependencies and Installation
-----------------------------
-To install the MultiPDF Chat App, please follow these steps:
+
+Follow these steps to install the Minerva's Archive application:
 
 1. Clone the repository to your local machine.
 
-2. Install the required dependencies by running the following command:
+2. Install the necessary dependencies by running the following command:
+   
    ```
    pip install -r requirements.txt
    ```
 
-3. Obtain an API key from OpenAI and add it to the `.env` file in the project directory.
+3. Obtain an API key from OpenAI and incorporate it into the `.env` file in the project directory.
 
 ## Usage
------
-To use the MultiPDF Chat App, follow these steps:
 
-1. Ensure that you have installed the required dependencies and added the OpenAI API key to the `.env` file.
+Follow these steps to use the Minerva's Archive application:
 
-2. Run the `main.py` file using the Streamlit CLI. Execute the following command:
+1. Verify that you have installed the required dependencies and added the OpenAI API key to the `.env` file.
+
+2. Run the `main.py` file using the Streamlit CLI with the following command:
+
    ```
    streamlit run app.py
    ```
 
-3. The application will launch in your default web browser, displaying the user interface.
+3. The application will launch in your default web browser, presenting the user interface.
 
-4. Load multiple PDF documents into the app by following the provided instructions.
-
-5. Ask questions in natural language about the loaded PDFs using the chat interface.
-
-## Contributing
-------------
-This repository is intended for educational purposes and does not accept further contributions. It serves as supporting material for a YouTube tutorial that demonstrates how to build this project. Feel free to utilize and enhance the app based on your own requirements.
+4. Use the chat interface to ask questions in natural language pertaining to the Max Planck Institute for Human Development.
 
 ## License
--------
-The MultiPDF Chat App is released under the [MIT License](https://opensource.org/licenses/MIT).
+
+Minerva's Archive is licensed under the [MIT License](https://opensource.org/licenses/MIT) and incorporates code fragments from the original GitHub repository [ask-multiple-pdfs](https://github.com/alejandro-ao/ask-multiple-pdfs) licensed under the MIT License.
