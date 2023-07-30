@@ -21,12 +21,12 @@ def create_tools():
         Tool(
             name = "OnePersonSearch",
             func= one_person_search,
-            description="useful when you need information about only one persons in the MPI. Input the question and the name of the person"
+            description="useful when you need personal information about only one persons in the MPI. It will list references for Selected Literature of this person aswell. Input the question and the name of the person"
         ),
         Tool(
             name = "MorePersonSearch",
             func=more_person_search,
-            description="useful when you need information about more then one persons in the MPI. Input the question and all names of all the persons"
+            description="useful when you need information about more then one persons in the MPI. It will list references for Selected Literature of this person aswell. Input the question and all names of all the persons"
         )
     ]
     return tools
