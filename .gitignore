@@ -160,7 +160,8 @@ cython_debug/
 #.idea/
 
 app_exp.py
-scrapingFunctions.py
-scrapingXML.py
 prompts_exp.py
 .chroma/
+.persondb/
+.reportdb/
+
