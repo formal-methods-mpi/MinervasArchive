@@ -164,4 +164,7 @@ prompts_exp.py
 .chroma/
 .persondb/
 .reportdb/
+.Fpersondb/
+.Freportdb/
+.DS_Store
 

@@ -1,6 +1,7 @@
 import os
 import streamlit as st
-import embed
+import embedFAISS as embed #For the FAISS vectorstore, uncomment only one
+#import embed #For the Chroma vectorstore, uncomment only one
 from langchain.chat_models import AzureChatOpenAI
 from langchain.memory import ConversationBufferMemory
 from htmlTemplates import css, disclaimer_text, box_template, user_img, bot_img
