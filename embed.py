@@ -51,7 +51,7 @@ class CustomOutputParser(AgentOutputParser):
             return AgentFinish(
                 # Return values is generally always a dictionary with a single `output` key
                 # It is not recommended to try anything else at the moment :)
-                return_values={"output": llm_output.split("Preliminary Answer:")[-1].split("\nAction")[0].strip().split("\nThought")[0].strip()},
+                return_values={"output": llm_output.split("Preliminary Answer:")[-1].split("\nAction")[0].strip().split("\nThought")[0].strip().split("\nQuestion")[0].strip()},
                 log=llm_output,
             )
         # Parse out the action and action input
