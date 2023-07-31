@@ -18,7 +18,7 @@ import langchain
 def get_conversation_chain(userinput):
     langchain.debug = True
     #Define AgentLLM
-    moderator = AzureChatOpenAI(request_timeout=20,temperature=0.1, model="moderator", deployment_name=os.getenv("OPENAI_MODERATOR_NAME"))
+    moderator = AzureChatOpenAI(request_timeout=30,temperature=0.1, model="moderator", deployment_name=os.getenv("OPENAI_MODERATOR_NAME"))
     
     # initiate Toolbox
     tools=toolbox.create_tools()
@@ -112,3 +112,5 @@ def main():
     
 if __name__ == '__main__':
     main()
+
+

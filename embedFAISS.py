@@ -36,10 +36,12 @@ class CustomPromptTemplate(BaseChatPromptTemplate):
         formatted = self.template.format(**kwargs)
         return [HumanMessage(content=formatted)]
 
-# parser neu schreiben
+
 class CustomOutputParser(AgentOutputParser):
     
     def parse(self, llm_output: str) -> Union[AgentAction, AgentFinish]:
+        # correct \
+        llm_output = llm_output.replace('\\n', '\n')
         # Check if agent should finish
         if "Final Answer:" in llm_output:
             return AgentFinish(
@@ -56,14 +58,24 @@ class CustomOutputParser(AgentOutputParser):
                 log=llm_output,
             )
         # Parse out the action and action input
+        
+        pattern = r"(SimpleReportSearch|ReportSummarizer|OnePersonSearch|MorePersonSearch)"
+        # Suche nach der Aktion im Eingabestring
+        matcher = re.search(pattern, llm_output)
+        if matcher:
+            # Extrahiere die gefundene Aktion
+            action = matcher.group(0).strip()
+        else:
+            return prompts.parsingError
+        
         regex = r"Action\s*\d*\s*:(.*?)\nAction\s*\d*\s*Input\s*\d*\s*:[\s]*(.*)"
         match = re.search(regex, llm_output, re.DOTALL)
-        if not match:
+
+        if match:
+            action_input = match.group(2)
+        else:
             return prompts.parsingError
-        action = match.group(1).strip()
-        if action not in ['SimpleReportSearch', 'ReportSummarizer', 'OnePersonSearch', 'MorePersonSearch']:
-            return prompts.parsingError
-        action_input = match.group(2)
+        
         # Return the action and action input
         return AgentAction(tool=action, tool_input=action_input.strip(" ").strip('"'), log=llm_output)
 
