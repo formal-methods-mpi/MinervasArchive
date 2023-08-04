@@ -79,8 +79,6 @@ This is the previous chat history:
 This is the Question from the User: 
 {input}
 
-And this is the related information, always reference the important sources from this information in your answer:
-{relevant_docs}
 
 Allways Answer in the following format:
 Answer:
