@@ -12,7 +12,6 @@ exec(open('auth.py').read())
 url = "https://www.rr23.mpib-berlin.mpg.de/sitemap.xml"
 # Fetch all urls of the report
 df = scraping.get_all_urls(url)
-
 # Create a WebBaseLoader object and load the document
 report_docs = embed.webpages(df)
 

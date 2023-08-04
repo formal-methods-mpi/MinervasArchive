@@ -1,7 +1,7 @@
 import os
 import streamlit as st
-#import embedFAISS as embed #For the FAISS vectorstore, uncomment only one
-import embed #For the Chroma vectorstore, uncomment only one
+import embedFAISS as embed #For the FAISS vectorstore, uncomment only one
+#import embed #For the Chroma vectorstore, uncomment only one
 from langchain.chat_models import AzureChatOpenAI
 from langchain.memory import ConversationBufferMemory
 from htmlTemplates import css, disclaimer_text, box_template, user_img, bot_img
@@ -22,7 +22,7 @@ def format_to_html(input_dict):
 
     # HTML Formatierung
     html_output = f'<p>{answer_text.strip()}</p>\n'
-    html_output += f'<p>Referenz: <a href="{sources_text}">{sources_text}</a></p>\n'
+    html_output += f'<p>Referenz: \n\n-<a href="{sources_text}">{sources_text}</a></p>\n'
 
     return html_output
 
@@ -33,7 +33,7 @@ def get_conversation_chain(userinput):
 
     docs=st.session_state.reportvectorstore.similarity_search(userinput)
 
-    qa_chain = RetrievalQAWithSourcesChain.from_chain_type(moderator,retriever=st.session_state.reportvectorstore.as_retriever(k=1))
+    qa_chain = RetrievalQAWithSourcesChain.from_chain_type(moderator,retriever=st.session_state.reportvectorstore.as_retriever(search_kwargs={"k": 4}), verbose=True)
     
     result = qa_chain({"question": userinput}, return_only_outputs=True)
 

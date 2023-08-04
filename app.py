@@ -1,7 +1,7 @@
 import os
 import streamlit as st
-#import embedFAISS as embed #For the FAISS vectorstore, uncomment only one
-import embed #For the Chroma vectorstore, uncomment only one
+import embedFAISS as embed #For the FAISS vectorstore, uncomment only one
+#import embed #For the Chroma vectorstore, uncomment only one
 from langchain.chat_models import AzureChatOpenAI
 from langchain.memory import ConversationBufferMemory
 from htmlTemplates import css, disclaimer_text, box_template, user_img, bot_img
@@ -56,8 +56,6 @@ def get_conversation_chain(userinput):
 def handle_userinput(userinput, container):
     with st.spinner('Await the brilliance of Minerva, for in her wisdom lies the answers you seek...'):
         response = get_conversation_chain(userinput)
-
-    # Update the session_state chat history with user question and chatbot response
 
     if st.session_state.chat_history is None:
         st.session_state.chat_history = [{'user': userinput, 'bot': response}]
