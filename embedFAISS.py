@@ -80,6 +80,7 @@ class CustomOutputParser(AgentOutputParser):
         return AgentAction(tool=action, tool_input=action_input.strip(" ").strip('"'), log=llm_output)
 
 def webpages(df):
+    # für personen ohne splitter
     loader = WebBaseLoader(list(df['loc']))
     text_splitter = RecursiveCharacterTextSplitter(
             chunk_size=1000,

@@ -33,7 +33,7 @@ def get_conversation_chain(userinput):
 
     docs=st.session_state.reportvectorstore.similarity_search(userinput)
 
-    qa_chain = RetrievalQAWithSourcesChain.from_chain_type(moderator,retriever=st.session_state.reportvectorstore.as_retriever())
+    qa_chain = RetrievalQAWithSourcesChain.from_chain_type(moderator,retriever=st.session_state.reportvectorstore.as_retriever(k=1))
     
     result = qa_chain({"question": userinput}, return_only_outputs=True)
 

@@ -1,7 +1,7 @@
 import os
 import streamlit as st
-import embedFAISS as embed #For the FAISS vectorstore, uncomment only one
-#import embed #For the Chroma vectorstore, uncomment only one
+#import embedFAISS as embed #For the FAISS vectorstore, uncomment only one
+import embed #For the Chroma vectorstore, uncomment only one
 from langchain.chat_models import AzureChatOpenAI
 from langchain.memory import ConversationBufferMemory
 from htmlTemplates import css, disclaimer_text, box_template, user_img, bot_img
@@ -22,7 +22,7 @@ def get_conversation_chain(userinput):
     
     # initiate Toolbox
     tools=toolbox.create_tools()
-
+    
     # create prompt for the agent (Includes behavior)
     prompt = embed.CustomPromptTemplate(
         template=prompts.moderatorSolo,
