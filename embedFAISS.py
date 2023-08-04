@@ -1,7 +1,7 @@
 import os
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from dotenv import load_dotenv
-from langchain.vectorstores import Chroma
+from langchain.vectorstores import Chroma,FAISS
 from langchain.document_loaders import WebBaseLoader
 from typing import List
 from langchain.embeddings.openai import OpenAIEmbeddings
@@ -11,6 +11,7 @@ from typing import List, Union
 from langchain.schema import AgentAction, AgentFinish, HumanMessage
 import re
 import prompts
+
 
 class CustomPromptTemplate(BaseChatPromptTemplate):
     # The template to use
@@ -34,6 +35,7 @@ class CustomPromptTemplate(BaseChatPromptTemplate):
         kwargs["tool_names"] = ", ".join([tool.name for tool in self.tools])
         formatted = self.template.format(**kwargs)
         return [HumanMessage(content=formatted)]
+
 
 class CustomOutputParser(AgentOutputParser):
     
@@ -89,11 +91,11 @@ def webpages(df):
 
 def report_db_dir():
     load_dotenv()
-    return os.getenv("CHROMA_REPORT_DIR")
+    return os.getenv("FAISS_REPORT_DIR")
 
 def person_db_dir():
     load_dotenv()
-    return os.getenv("CHROMA_PERSON_DIR")    
+    return os.getenv("FAISS_PERSON_DIR")    
 
 def report_db_dir_exists():
     return os.path.isdir(report_db_dir())
@@ -105,11 +107,11 @@ def embedding():
     return OpenAIEmbeddings(model=os.getenv("OPENAI_EMBEDDING_MODEL_NAME"), deployment=os.getenv("OPENAI_EMBEDDING_DEPLOYMENT_NAME"), chunk_size=1)
 
 def pages_to_vectorstore(pages):
-    vectorstore = Chroma.from_documents(documents=pages, embedding=embedding(), persist_directory=person_db_dir())
+    vectorstore = FAISS.from_documents(documents=pages, embedding=embedding())
     return vectorstore
 
 def report_vectorstore():
-    return Chroma(persist_directory=report_db_dir(), embedding_function=embedding())
+    return FAISS.load_local(folder_path=report_db_dir(), embeddings=embedding())
 
 def person_vectorstore():
-    return Chroma(persist_directory=person_db_dir(), embedding_function=embedding())
+    return FAISS.load_local(folder_path=person_db_dir(), embeddings=embedding())

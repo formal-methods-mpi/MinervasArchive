@@ -1,57 +1,43 @@
 import os
 import streamlit as st
-import embedFAISS as embed #For the FAISS vectorstore, uncomment only one
-#import embed #For the Chroma vectorstore, uncomment only one
+#import embedFAISS as embed #For the FAISS vectorstore, uncomment only one
+import embed #For the Chroma vectorstore, uncomment only one
 from langchain.chat_models import AzureChatOpenAI
 from langchain.memory import ConversationBufferMemory
 from htmlTemplates import css, disclaimer_text, box_template, user_img, bot_img
 import prompts
 from langchain.memory import ConversationBufferMemory
-from langchain.chains import LLMChain
+from langchain.chains import LLMChain, RetrievalQAWithSourcesChain
 from langchain.agents import AgentExecutor, LLMSingleActionAgent
 from langchain import LLMChain
 from typing import List
 import agentTools as toolbox
 from streamlit.components.v1 import html
 import langchain
+from langchain import PromptTemplate
+
+def format_to_html(input_dict):
+    answer_text = input_dict.get('answer', '')
+    sources_text = input_dict.get('sources', '')
+
+    # HTML Formatierung
+    html_output = f'<p>{answer_text.strip()}</p>\n'
+    html_output += f'<p>Referenz: <a href="{sources_text}">{sources_text}</a></p>\n'
+
+    return html_output
 
 def get_conversation_chain(userinput):
     langchain.debug = True
     #Define AgentLLM
     moderator = AzureChatOpenAI(request_timeout=30,temperature=0.1, model="moderator", deployment_name=os.getenv("OPENAI_MODERATOR_NAME"))
+
+    docs=st.session_state.reportvectorstore.similarity_search(userinput)
+
+    qa_chain = RetrievalQAWithSourcesChain.from_chain_type(moderator,retriever=st.session_state.reportvectorstore.as_retriever())
     
-    # initiate Toolbox
-    tools=toolbox.create_tools()
+    result = qa_chain({"question": userinput}, return_only_outputs=True)
 
-    # create prompt for the agent (Includes behavior)
-    prompt = embed.CustomPromptTemplate(
-        template=prompts.moderatorSolo,
-        tools=tools,
-        input_variables=["input", "intermediate_steps", "history"]
-    )
-
-    # formate output
-    output_parser = embed.CustomOutputParser()
-    llm_chain = LLMChain(llm=moderator, prompt=prompt)
-    tool_names = [tool.name for tool in tools]
-
-    # Create agent
-    agent = LLMSingleActionAgent(
-        verbose=True, 
-        llm_chain=llm_chain, 
-        output_parser=output_parser,
-        stop=["\nObservation:"], 
-        allowed_tools=tool_names,
-        handle_parsing_errors=True,
-    )
-
-    # combine agent and Tools for execution
-    agent_executor = AgentExecutor.from_agent_and_tools(agent=agent, tools=tools, verbose=True, memory=st.session_state.conversation,handle_parsing_errors=True,)
-
-    # execute
-    answer = agent_executor.run(input=userinput)
-    
-    return answer
+    return format_to_html(result)
 
 def handle_userinput(userinput, container):
     with st.spinner('Await the brilliance of Minerva, for in her wisdom lies the answers you seek...'):
