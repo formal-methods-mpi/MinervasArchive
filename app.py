@@ -8,7 +8,8 @@ from htmlTemplates import css, disclaimer_text, box_template, user_img, bot_img
 import prompts
 from langchain.memory import ConversationBufferMemory
 from langchain.chains import LLMChain
-from langchain.agents import AgentExecutor, LLMSingleActionAgent
+from langchain.agents import AgentExecutor, LLMSingleActionAgent, initialize_agent
+from customAgent import CustomExecutor
 from langchain import LLMChain
 from typing import List
 import agentTools as toolbox
@@ -16,9 +17,9 @@ from streamlit.components.v1 import html
 import langchain
 
 def get_conversation_chain(userinput):
-    langchain.debug = True
+    #langchain.debug = True
     #Define AgentLLM
-    moderator = AzureChatOpenAI(request_timeout=30,temperature=0.1, model="moderator", deployment_name=os.getenv("OPENAI_MODERATOR_NAME"))
+    moderator = AzureChatOpenAI(request_timeout=60,temperature=1, model="moderator", deployment_name=os.getenv("OPENAI_MODERATOR_NAME"))
     
     # initiate Toolbox
     tools=toolbox.create_tools()
@@ -32,7 +33,7 @@ def get_conversation_chain(userinput):
 
     # formate output
     output_parser = embed.CustomOutputParser()
-    llm_chain = LLMChain(llm=moderator, prompt=prompt)
+    llm_chain = LLMChain(llm=moderator, prompt=prompt, verbose=True)
     tool_names = [tool.name for tool in tools]
 
     # Create agent
@@ -42,15 +43,17 @@ def get_conversation_chain(userinput):
         output_parser=output_parser,
         stop=["\nObservation:"], 
         allowed_tools=tool_names,
-        handle_parsing_errors=True,
+        kwargs={"handle_parsing_errors":True}
     )
 
     # combine agent and Tools for execution
-    agent_executor = AgentExecutor.from_agent_and_tools(agent=agent, tools=tools, verbose=True, memory=st.session_state.conversation,handle_parsing_errors=True,)
-
+    agent_executor = CustomExecutor.from_agent_and_tools(agent=agent, tools=tools, verbose=True, memory=st.session_state.conversation)
+    agent_executor.handle_parsing_errors = prompts.parsingError
     # execute
-    answer = agent_executor.run(input=userinput)
-    
+    try:
+        answer = agent_executor.run(input=userinput)
+    except ValueError as e:
+        return e
     return answer
 
 def handle_userinput(userinput, container):

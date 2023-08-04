@@ -59,7 +59,7 @@ class CustomOutputParser(AgentOutputParser):
             )
         # Parse out the action and action input
         
-        pattern = r"(SimpleReportSearch|ReportSummarizer|OnePersonSearch|MorePersonSearch)"
+        pattern = r"(SimpleReportSearch|ReportSummarizer|OnePersonSearch|TermSearch)"
         # Suche nach der Aktion im Eingabestring
         matcher = re.search(pattern, llm_output)
         if matcher:
