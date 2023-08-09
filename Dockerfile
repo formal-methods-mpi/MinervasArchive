@@ -7,6 +7,7 @@ RUN apt-get update && apt-get install -y \
     git \
     && rm -rf /var/lib/apt/lists/*
 RUN git clone https://github.com/formal-methods-mpi/MinervasArchive.git .
+COPY .env /app/
 RUN pip3 install -r requirements.txt
 RUN python scrapingXMLfaiss.py
 HEALTHCHECK CMD curl --fail http://localhost:8501/_stcore/health
