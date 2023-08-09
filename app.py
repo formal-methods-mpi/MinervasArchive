@@ -75,7 +75,8 @@ def display_chat_history(container):
                     st.write(chat['user'],unsafe_allow_html=True)
                 with st.chat_message("Bot",avatar=bot_img):
                     st.write(chat['bot'],unsafe_allow_html=True)
-
+    if st.session_state.buttonstate == False:
+        st.session_state.buttonstate == True
 
 def reset():
         st.session_state.user_question = st.session_state.widget
@@ -98,17 +99,44 @@ def main():
         st.session_state.personvectorstore = embed.person_vectorstore()
     if 'reportvectorstore' not in st.session_state:
         st.session_state.reportvectorstore = embed.report_vectorstore()
+    if 'buttonstate' not in st.session_state:
+        st.session_state.buttonstate = True
+    if 'buttondisable' not in st.session_state:
+        st.session_state.buttondisable = False
+    if 'user_input' not in st.session_state:
+        st.session_state.user_input = ''
     
-    
-    #st.header("Chat with the research report:")
-    #st.divider() 
+    placeholder = st.empty()
+    with placeholder.container():
+        st.caption("You dont know what to ask? Here are some suggestions, just click on one!")
+        col1, col2, col3, col4 = st.columns(4)
+        with col1:
+            if st.button('Could you tell me more about the formal methods projekt?'):
+                st.session_state.user_input = 'Could you tell me more about the formal methods projekt?'
+        with col2:
+            if st.button("Could you give me an overview over the research report?"):
+                st.session_state.user_input = "Could you give me an overview over the research report?"
+        with col3:
+            if st.button('Who is Ulman Lindenberger and what are his research interests?'):
+                st.session_state.user_input = 'Who is Ulman Lindenberger and what are his research interests?'
+        with col4:
+            if st.button("Could you explain to me what the research goal of the Max Planck Institute for Human Development is?"):
+                st.session_state.user_input = "Could you explain to me what the research goal of the Max Planck Institute for Human Development is?"
+            
     container=st.container()
-    user_input = st.chat_input("Ask a question about the research report:")
-    if user_input:
-        handle_userinput(user_input, container)
-    with st.container():
-        st.caption(disclaimer_text)
-
+    free_user_input = st.chat_input("Ask a question about the research report:")
+    if free_user_input:   
+        st.session_state.user_input = free_user_input
+    if st.session_state.user_input:
+        placeholder.empty()
+        messageplaceholder = st.empty()
+        with messageplaceholder.chat_message("User",avatar=user_img):
+            st.write(st.session_state.user_input,unsafe_allow_html=True)
+        handle_userinput(st.session_state.user_input, container)
+        messageplaceholder.empty()
+        with st.container():
+            st.caption(disclaimer_text)
+    
     
     
 if __name__ == '__main__':
