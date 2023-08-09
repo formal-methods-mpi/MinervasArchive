@@ -16,5 +16,5 @@ services:
         - CHROMA_PERSON_DIR=${CHROMA_PERSON_DIR}
         - FAISS_REPORT_DIR=${FAISS_REPORT_DIR}
         - FAISS_PERSON_DIR=${FAISS_PERSON_DIR}
-    environment:
-      - OPENAI_API_KEY = ${OPENAI_API_KEY}
+    env_file:
+      - .env
