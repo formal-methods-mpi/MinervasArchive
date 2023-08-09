@@ -11,7 +11,6 @@ ARG CACHEBUST=2
 RUN pip3 install -r requirements.txt
 ARG OPENAI_API_KEY
 ARG OPENAI_API_BASE
-ARG OPENAI_API_KEY
 ARG OPENAI_MODERATOR_NAME
 ARG OPENAI_MODEL_NAME
 ARG OPENAI_SUMMARIZER_NAME
@@ -23,7 +22,6 @@ ARG CHROMA_REPORT_DIR
 ARG CHROMA_PERSON_DIR
 ARG FAISS_REPORT_DIR
 ARG FAISS_PERSON_DIR
-#RUN python scrapingXMLfaiss.py
-#HEALTHCHECK CMD curl --fail http://localhost:8501/_stcore/health
-#ENTRYPOINT ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
-ENTRYPOINT [ "bash"]
+RUN python scrapingXMLfaiss.py
+HEALTHCHECK CMD curl --fail http://localhost:8501/_stcore/health
+ENTRYPOINT ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
