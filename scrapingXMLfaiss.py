@@ -13,7 +13,7 @@ url = "https://www.rr23.mpib-berlin.mpg.de/sitemap.xml"
 # Fetch all urls of the report
 df = scraping.get_all_urls(url)
 # Create a WebBaseLoader object and load the document
-report_docs = embed.webpages(df.iloc[0:5])
+report_docs = embed.webpages(df)
 
 reportdb = FAISS.from_documents(report_docs, embed.embedding())
 reportdb.save_local(embed.report_db_dir())
@@ -41,7 +41,7 @@ for i in range(1,22):
 df = scraping.urls_to_dataframe(urls, start_url)
 
 # Create a WebBaseLoader object and load the document
-person_docs = embed.webpages(df.iloc[0:5])
+person_docs = embed.webpages(df)
 
 persondb = FAISS.from_documents(person_docs, embed.embedding())
 persondb.save_local(embed.person_db_dir())
