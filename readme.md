@@ -14,7 +14,7 @@ cd MinervasArchive
 cp .env.example .env
 ```
 
-Add an Open AI API key from https://portal.azure.com/ under Keys and Endpoints
+Add an Open AI API key from https://portal.azure.com/ (click on the deployment, then under Keys and Endpoints)
 
 ```
 nano .env
@@ -63,13 +63,12 @@ Follow these steps to use the Minerva's Archive application:
 1. Bump the version number in `docker-compose.yml` under `image:` and note the new IMAGENAME
 2. Build the image locally: `docker compose build --no-cache`
 3. Get a GitHub token with permision `packages:write`
-4. Upload
-
-```
-export CR_PAT=YOUR_TOKEN
-echo $CR_PAT | docker login ghcr.io -u USERNAME --password-stdin
-docker push IMAGENAME
-```
+4. Upload:
+   ```
+   export CR_PAT=YOUR_TOKEN
+   echo $CR_PAT | docker login ghcr.io -u USERNAME --password-stdin
+   docker push IMAGENAME
+   ```
 
 ## License
 
