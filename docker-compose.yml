@@ -1,3 +1,5 @@
+version: '0.0.2'
+
 services:
   web:
     build:
@@ -9,7 +11,7 @@ services:
         BRANCH: main
     env_file:
       - .env
-    image: ghcr.io/formal-methods-mpi/minervasarchive:0.0.1
+    image: ghcr.io/formal-methods-mpi/minervasarchive:latest
     ports:
       - "8501:8501"
 secrets:
