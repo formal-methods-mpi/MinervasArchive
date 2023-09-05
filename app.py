@@ -124,7 +124,7 @@ def main():
                 st.session_state.user_input = "Could you explain to me what the research goal of the Max Planck Institute for Human Development is?"
             
     container=st.container()
-    free_user_input = st.chat_input("Ask a question about the research report:",max_chars=100)
+    free_user_input = st.chat_input("Ask a question about the research report:", max_chars=250)
     if free_user_input:   
         st.session_state.user_input = free_user_input
     if st.session_state.user_input:
