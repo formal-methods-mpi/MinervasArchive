@@ -67,7 +67,7 @@ Follow these steps to use the Minerva's Archive application:
    ```
    export CR_PAT=YOUR_TOKEN
    echo $CR_PAT | docker login ghcr.io -u USERNAME --password-stdin
-   docker push IMAGENAME
+   docker push ghcr.io/formal-methods-mpi/minervasarchive:latest
    ```
 
 ## License
