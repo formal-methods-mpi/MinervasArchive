@@ -8,8 +8,8 @@ x-minervasarchive:
     secrets:
       - env
     args:
-      REPO: https://github.com/formal-methods-mpi/MinervasArchive/Testing
-      BRANCH: main
+      REPO: https://github.com/formal-methods-mpi/MinervasArchive
+      BRANCH: Main
   env_file:
     - .env
   ports:
