@@ -18,7 +18,7 @@ x-minervasarchive:
 services:
   # Image Tag für latest
   minervasarchive:
-    *default-minervasarchive
+    <<: *default-minervasarchive
     image: ghcr.io/formal-methods-mpi/minervasarchive:latest
 
   # Image Tag für version
