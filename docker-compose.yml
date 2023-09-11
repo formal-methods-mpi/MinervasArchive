@@ -1,19 +1,31 @@
-version: '0.0.2'
+version: '3.4'
+
+# Definiere das gemeinsame Verhalten
+x-minervasarchive:
+  &default-minervasarchive
+  build:
+    dockerfile: Dockerfile
+    secrets:
+      - env
+    args:
+      REPO: https://github.com/formal-methods-mpi/MinervasArchive/Testing
+      BRANCH: main
+  env_file:
+    - .env
+  ports:
+    - "8501:8501"
 
 services:
-  web:
-    build:
-      dockerfile: Dockerfile
-      secrets:
-        - env
-      args:
-        REPO: https://github.com/formal-methods-mpi/MinervasArchive
-        BRANCH: main
-    env_file:
-      - .env
+  # Image Tag für latest
+  minervasarchive:
+    *default-minervasarchive
     image: ghcr.io/formal-methods-mpi/minervasarchive:latest
-    ports:
-      - "8501:8501"
+
+  # Image Tag für version
+  minervasarchive_version:
+    <<: *default-minervasarchive
+    image: ghcr.io/formal-methods-mpi/minervasarchive:0.2.0
+
 secrets:
   env:
     file: ./.env
