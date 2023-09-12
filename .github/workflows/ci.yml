@@ -40,5 +40,3 @@ jobs:
         uses: docker/bake-action@v4
         with:
           push: true
-          tags: latest
-          file: docker-compose.yml
