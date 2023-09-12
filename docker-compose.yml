@@ -7,7 +7,7 @@ services:
       secrets:
         - env
       args:
-        REPO: https://github.com/formal-methods-mpi/MinervasArchive
+        REPO: https://github.com/aaronpeikert/ask-multiple-pdfs/
         BRANCH: main
     env_file:
       - .env
