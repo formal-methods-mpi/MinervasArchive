@@ -27,6 +27,7 @@ def get_sitemap_type(xml):
     else:
         return
 
+# indexieren der personen auf namen
 # Function to fetch the URLs of the child sitemaps
 def get_child_sitemaps(xml):
     sitemaps = xml.find_all("sitemap")

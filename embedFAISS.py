@@ -59,7 +59,7 @@ class CustomOutputParser(AgentOutputParser):
             )
         # Parse out the action and action input
         
-        pattern = r"(SimpleReportSearch|ReportSummarizer|OnePersonSearch|MorePersonSearch)"
+        pattern = r"(SimpleReportSearch|ReportSummarizer|OnePersonSearch|TermSearch)"
         # Suche nach der Aktion im Eingabestring
         matcher = re.search(pattern, llm_output)
         if matcher:
@@ -80,14 +80,18 @@ class CustomOutputParser(AgentOutputParser):
         return AgentAction(tool=action, tool_input=action_input.strip(" ").strip('"'), log=llm_output)
 
 def webpages(df):
-    loader = WebBaseLoader(list(df['loc']))
-    text_splitter = RecursiveCharacterTextSplitter(
-            chunk_size=1000,
-            chunk_overlap=200,
-            length_function=len
-        )
-    document = loader.load_and_split(text_splitter=text_splitter)
-    return document
+    documents=[]
+    for urls in list(df['loc']):
+        loader = WebBaseLoader(urls)
+        text_splitter = RecursiveCharacterTextSplitter(
+                chunk_size=2000,
+                chunk_overlap=200,
+                length_function=len
+            )
+        document = loader.load_and_split(text_splitter=text_splitter)
+        for splitdoc in document:
+            documents.append(splitdoc)
+    return documents
 
 def report_db_dir():
     load_dotenv()
