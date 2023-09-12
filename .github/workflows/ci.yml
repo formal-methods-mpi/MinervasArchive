@@ -40,4 +40,4 @@ jobs:
         uses: docker/bake-action@v4
         with:
           push: true
-          targets: web
+          files: docker-compose.yml
