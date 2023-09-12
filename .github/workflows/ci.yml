@@ -41,3 +41,4 @@ jobs:
         with:
           push: true
           tags: latest
+          file: docker-compose.yml
