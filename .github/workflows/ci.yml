@@ -37,7 +37,7 @@ jobs:
           ENV : ${{secrets.ENV}}
       -
         name: Build and push
-        uses: docker/build-push-action@v4
+        uses: docker/bake-action@v4
         with:
           push: true
           tags: latest
