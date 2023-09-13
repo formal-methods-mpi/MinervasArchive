@@ -27,13 +27,15 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      -
-        name: Set up `.env`
+
+      - 
+        name: Configure .env file
         run: |
-          echo $ENV >> .env
+          python -c "import os; file = open('.env', 'w'); file.write(os.environ['ENV']); file.close()"
         shell: bash
         env:
           ENV : ${{secrets.ENV}}
+  
       -
         name: Build and push
         uses: docker/bake-action@v4
