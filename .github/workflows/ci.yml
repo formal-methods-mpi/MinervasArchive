@@ -34,6 +34,14 @@ jobs:
         shell: bash
         env:
           ENV : ${{secrets.ENV}}
+      - 
+        name: Configure .env file
+        run: |
+          python -c "import os; file = open('.env', 'w'); file.write(os.environ['ENV']); file.close()"
+        shell: bash
+        env:
+          ENV : ${{secrets.ENV}}
+  
       -
         name: Build and push
         uses: docker/bake-action@v4
