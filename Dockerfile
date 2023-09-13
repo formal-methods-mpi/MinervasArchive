@@ -6,9 +6,7 @@ RUN apt-get update && apt-get install -y \
     software-properties-common \
     git \
     && rm -rf /var/lib/apt/lists/*
-ARG REPO
-ARG BRANCH
-RUN git clone $REPO --single-branch .
+COPY repo .
 RUN pip3 install -r requirements.txt
 RUN --mount=type=secret,id=env python testAuth.py
 RUN --mount=type=secret,id=env python scrapingXMLfaiss.py

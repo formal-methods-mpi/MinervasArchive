@@ -6,9 +6,6 @@ services:
       dockerfile: Dockerfile
       secrets:
         - env
-      args:
-        REPO: https://github.com/aaronpeikert/ask-multiple-pdfs/
-        BRANCH: main
     env_file:
       - .env
     ports:
