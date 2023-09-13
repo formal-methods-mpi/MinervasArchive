@@ -30,7 +30,7 @@ jobs:
       -
         name: Set up `.env`
         run: |
-          echo '$ENV' >> .env
+          echo $ENV >> .env
         shell: bash
         env:
           ENV : ${{secrets.ENV}}
