@@ -1,7 +1,7 @@
 target "docker-metadata-action" {}
 
 target "build" {
-  secret = ["id=env.json,src=.env"]
+  secret = ["id=env,src=./.env"]
   inherits = ["docker-metadata-action"]
   context = "./"
   dockerfile = "Dockerfile"
