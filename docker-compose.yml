@@ -11,7 +11,6 @@ services:
         BRANCH: main
     env_file:
       - .env
-    image: ghcr.io/formal-methods-mpi/minervasarchive:latest
     ports:
       - "8501:8501"
 secrets:
