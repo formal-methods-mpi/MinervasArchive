@@ -27,13 +27,7 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      -
-        name: Set up `.env`
-        run: |
-          echo $ENV >> .env
-        shell: bash
-        env:
-          ENV : ${{secrets.ENV}}
+
       - 
         name: Configure .env file
         run: |
