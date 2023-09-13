@@ -11,7 +11,7 @@ ARG BRANCH
 RUN git clone $REPO --branch $BRANCH --single-branch .
 RUN pip3 install -r requirements.txt
 RUN --mount=type=secret,id=env python testAuth.py
-RUN --mount=type=secret,id=env python scrapingXMLfaiss.py
-HEALTHCHECK CMD curl --fail http://localhost:8501/_stcore/health
-CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+#RUN --mount=type=secret,id=env python scrapingXMLfaiss.py
+#HEALTHCHECK CMD curl --fail http://localhost:8501/_stcore/health
+#CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
 LABEL org.opencontainers.image.source=$REPO
