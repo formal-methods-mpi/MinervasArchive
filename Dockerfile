@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 ARG REPO
 ARG BRANCH
-RUN git clone $REPO --branch $BRANCH --single-branch .
+RUN git clone $REPO --single-branch .
 RUN pip3 install -r requirements.txt
 RUN --mount=type=secret,id=env python testAuth.py
 RUN --mount=type=secret,id=env python scrapingXMLfaiss.py
