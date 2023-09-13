@@ -45,7 +45,7 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: |
-            name/app
+            ${{ env.IMAGE_NAME	}}
           tags: |
             type=ref,event=branch
             type=ref,event=pr
@@ -60,3 +60,4 @@ jobs:
             ./docker-bake.hcl
             ${{ steps.meta.outputs.bake-file }}
           targets: build
+          push: true
