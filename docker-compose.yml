@@ -6,12 +6,8 @@ services:
       dockerfile: Dockerfile
       secrets:
         - env
-      args:
-        REPO: https://github.com/formal-methods-mpi/MinervasArchive
-        BRANCH: main
     env_file:
       - .env
-    image: ghcr.io/formal-methods-mpi/minervasarchive:latest
     ports:
       - "8501:8501"
 secrets:
