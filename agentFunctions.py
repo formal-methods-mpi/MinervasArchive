@@ -15,7 +15,6 @@ def simple_report_search(user_input):
     qa_chain = RetrievalQAWithSourcesChain.from_chain_type(summarizer,retriever=st.session_state.reportvectorstore.as_retriever(search_kwargs={"k": 2}))
     
     result = qa_chain({"question": user_input,"handle_parsing_errors":True}, return_only_outputs=True)
-    result["system"] = prompts.BackToModerator
 
     return result
 
@@ -26,7 +25,6 @@ def one_person_search(user_input):
     qa_chain = RetrievalQAWithSourcesChain.from_chain_type(summarizer,retriever=st.session_state.personvectorstore.as_retriever(search_kwargs={"k": 2}))
     
     result = qa_chain({"question": user_input,"handle_parsing_errors":True}, return_only_outputs=True)
-    result["system"] = prompts.BackToModerator
 
     return result
 
@@ -37,6 +35,5 @@ def report_summarizer(user_input):
     qa_chain = RetrievalQAWithSourcesChain.from_chain_type(summarizer,retriever=st.session_state.reportvectorstore.as_retriever(search_kwargs={"k": 5}))
     
     result = qa_chain({"question": user_input,"handle_parsing_errors":True}, return_only_outputs=True)
-    result["system"] = prompts.BackToModerator
 
     return result
