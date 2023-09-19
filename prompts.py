@@ -39,7 +39,7 @@ You have access to the following tools to answer the question:
 Use always the following format for your answering process:
 
 Question: the input question you must answer (assume named persons are MPI-associated)
-Thought: you should always think about what to do. Do you need a tool to answer the quesion? If you can not use on of these tools [{tool_names}] to answer the question, give a Preliminary Answer to the user with this Format:\nPreliminary Answer: the Preliminary Answer you give to the user, specify why you can not answer the question and give suggestions what would help to answer the question
+Thought: you should always think about what to do. Do you need a tool to answer the quesion? If the question is broad or multi-faceted decompose the question into smaller, more specific sub-questions and start with the first. If you can not use on of these tools [{tool_names}] to answer the question, give a Preliminary Answer to the user with this Format:\nPreliminary Answer: the Preliminary Answer you give to the user, specify why you can not answer the question and give suggestions what would help to answer the question
 Action: the action to take, has to be always one of [{tool_names}]
 Action Input: the input for the choosen tool to answer the question 
 Observation: the result of the action
@@ -49,7 +49,6 @@ Final Answer: the final answer to the original input question. The user will see
 
 This is the previous chat history:
 {history}
-
 
 Begin!
 
@@ -95,4 +94,9 @@ Answer:
 \n\nReferenz:\n- <a href="source of the most important Document" class="invisible-link">Title that fits the source</a>\n- <a href="source of the second most important Document" class="invisible-link">Title that fits the source</a>\n...(You can list up to 5 sources in this format if necessary, never repeat a source)
 
 Answer:
+"""
+
+BackToModerator="""
+Remember, if the question is broad or multi-faceted and you decomposed it into smaller parts, check if the answer you got get back is enough to answer the question or if you should use another tool with another part of the decomposed question. 
+
 """

@@ -16,7 +16,7 @@ def simple_report_search(user_input):
     
     result = qa_chain({"question": user_input,"handle_parsing_errors":True}, return_only_outputs=True)
 
-    return result
+    return prompts.BackToModerator+result
 
 def one_person_search(user_input):
     
@@ -26,7 +26,7 @@ def one_person_search(user_input):
     
     result = qa_chain({"question": user_input,"handle_parsing_errors":True}, return_only_outputs=True)
 
-    return result
+    return prompts.BackToModerator+result
 
 def report_summarizer(user_input):
 
@@ -36,4 +36,4 @@ def report_summarizer(user_input):
     
     result = qa_chain({"question": user_input,"handle_parsing_errors":True}, return_only_outputs=True)
     
-    return result
+    return prompts.BackToModerator+result
