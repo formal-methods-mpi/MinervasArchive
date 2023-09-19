@@ -32,6 +32,8 @@ Key Groups & Schools:
 
 When responding to inquiries, consider the overarching themes, abbreviations and expertise of each center, group, or school to provide precise and relevant answers aswell as input the right input in the tools.
 
+If the question is broad or multi-faceted and you decomposed it into smaller parts, check if the answer you got get back is enough to answer the question or if you should use another tool with another part of the decomposed question. 
+
 You have access to the following tools to answer the question:
 
 {tools}
@@ -66,7 +68,7 @@ Action Input: the input for the choosen tool to answer the question
 Observation: the result of the action
 ... (this Thought/Action/Action Input/Observation can repeat up to 3 times)
 Thought: I now know the final answer
-Final Answer: the final answer to the original input question. The user will see this answer and you should be precice and friendly. If you have got sources from a tool, the final Answer has following format:[The answer of the Question from the User]\n\n[if appropriate, here are the suggestions for the user]\n\nReferenz:\n- <a href="source of the most important Document" class="invisible-link">Title that fits the source</a>\n- <a href="source of the second most important Document" class="invisible-link">Title that fits the source</a>\n...(You can list up to 5 sources in this format if necessary, never repeat a source)
+Final Answer: the final answer to the original input question. The user will see this answer and you should be precice and friendly. You have got sources from a tool and you need to include them (Only not include if N/A), the final Answer has following format:[The answer of the Question from the User]\n\n[if appropriate, here are the suggestions for the user]\n\nReferenz:\n- <a href="source of the most important Document" class="invisible-link">Title that fits the source</a>\n- <a href="source of the second most important Document" class="invisible-link">Title that fits the source</a>\n...(You can list up to 5 sources in this format if necessary, never repeat a source)
 
 """
 
@@ -97,6 +99,5 @@ Answer:
 """
 
 BackToModerator="""
-Remember, if the question is broad or multi-faceted and you decomposed it into smaller parts, check if the answer you got get back is enough to answer the question or if you should use another tool with another part of the decomposed question. 
 
 """
