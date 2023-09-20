@@ -11,22 +11,22 @@ def create_tools():
         Tool(
             name = "TermSearch",
             func=tearm_search,
-            description="use this tool if you are not sure about a term. Input the term"
+            description="Search for specific terms to clarify their meaning. Input the desired term."
         ),
         Tool(
             name = "SimpleReportSearch",
             func=simple_report_search,
-            description="useful if you think that you need just a little information from the report to answer the User Question. Input a question what information you need and keywords, Suitable for a keywords-based search in a vector space"
+            description="Retrieve concise information from the report, especially about groups, projects, schools, or members of a group. Input your question and related keywords."
         ),
         Tool(
             name = "ReportSummarizer",
             func = report_summarizer,
-            description="useful if you think that you need a lot information from the report to answer the User Question. Input a question what information you need and keywords, Suitable for a keywords-based search in a vector space"
+            description="Extract comprehensive details from the report when broader context is needed. Input your question and related keywords."
         ),
         Tool(
             name = "OnePersonSearch",
             func= one_person_search,
-            description="useful if you think that you need personal information about a persons in the MPI to answer the User Question. Input a question with the name of the person you search for, Suitable for a keyword-based search in a vector space"
+            description="Locate specific details about a person in the MPI. Input the person's name and any related query."
         )
     ]
     return tools
