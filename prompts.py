@@ -29,6 +29,9 @@ Key Groups & Schools:
 - **LIFE**: A research school exploring the life course.
 - **COMP2PSYCH**: Focuses on computational methods in psychiatry and ageing.
 - **MPSCog**: A school dedicated to cognition.
+- **LMG (Lise-Meitner-Gruppe Umweltneurowissenschaften) **: Group for Environmental Neuroscience
+- **ENG (Emmy Noether Group) **: Lifespan Neural Dynamics Group (LNDG)
+- **ERC (ERC-Funded Research Group) **: Adaptive Memory and Decision Making (AMD)
 
 When responding to inquiries, consider the overarching themes, abbreviations and expertise of each center, group, or school to provide precise and relevant answers aswell as input the right input in the tools.
 
