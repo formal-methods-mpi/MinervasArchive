@@ -26,7 +26,7 @@ def create_tools():
         Tool(
             name = "OnePersonSearch",
             func= one_person_search,
-            description="Locate specific details about a person in the MPI. Input the person's name and any related query."
+            description="Use this tool if you search for one person. Locate specific details about a person in the MPI. Input the person's name and any related query."
         )
     ]
     return tools

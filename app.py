@@ -20,7 +20,7 @@ from langfuse.callback import CallbackHandler
 def get_conversation_chain(userinput):
     # Initiate connection to Langfuse
     handler = CallbackHandler(os.getenv("LANGFUSE_KEY_PUBLIC"), os.getenv("LANGFUSE_KEY_PRIVATE"))
-    # langchain.debug = True # Activate for local debugging
+    langchain.debug = True # Activate for local debugging
     # Define AgentLLM
     moderator = AzureChatOpenAI(request_timeout=60,temperature=0.1, model="moderator", deployment_name=os.getenv("OPENAI_MODERATOR_NAME"))
     
@@ -46,7 +46,8 @@ def get_conversation_chain(userinput):
         output_parser=output_parser,
         stop=["\nObservation:"], 
         allowed_tools=tool_names,
-        kwargs={"handle_parsing_errors":True}
+        kwargs={"handle_parsing_errors":True},
+        max_iterations=2,
     )
 
     # combine agent and Tools for execution
